@@ -23,7 +23,7 @@ class UserObserver
     public function updated(User $user): void
     {
         $old = [];
-        
+
         foreach ($user->getDirty() as $key => $value) {
             $old[$key] = $user->getOriginal($key);
         }
@@ -43,13 +43,13 @@ class UserObserver
 
     public function deleted(User $user): void
     {
-    }
-
-    public function restored(User $user): void
-    {
-    }
-
-    public function forceDeleted(User $user): void
-    {
+        UserAuditJob::dispatch([
+            'event' => 'deleted',
+            'user_id' => auth()->id(),
+            'when' => now(),
+            'details' => $user->toArray(),
+            'auditable_type' => User::class,
+            'auditable_id' => $user->id,
+        ]);
     }
 }

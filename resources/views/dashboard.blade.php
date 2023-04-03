@@ -30,7 +30,7 @@
                             <li>
                                 {{$user->name}} -
                                 <a href="{{route('users.show', ['user' => $user])}}">update</a>
-                                <a href="">delete</a>
+                                <a href="{{route('users.delete', ['user' => $user])}}">delete</a>
                             </li>
                         @endforeach
                     </ul>

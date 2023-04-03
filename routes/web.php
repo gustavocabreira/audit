@@ -42,6 +42,11 @@ Route::middleware('auth')->group(function () {
         $user->fill($request->all())->save();
         return to_route('dashboard');
     })->name('users.update');
+
+    Route::get('/users/{user}/delete', function (User $user) {
+        $user->delete();
+        return to_route('dashboard');
+    })->name('users.delete');
 });
 
 require __DIR__ . '/auth.php';
