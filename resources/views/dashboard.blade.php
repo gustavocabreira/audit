@@ -15,9 +15,9 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form action="{{route('users.store')}}" method="post">
                         @csrf
-                        <input type="text" name="name" placeholder="Name"/>
-                        <input type="text" name="email" placeholder="Email"/>
-                        <input type="text" name="password" placeholder="Password"/>
+                        <input class="text-black" type="text" name="name" placeholder="Name"/>
+                        <input class="text-black" type="text" name="email" placeholder="Email"/>
+                        <input class="text-black" type="text" name="password" placeholder="Password"/>
                         <button class="bg-blue-600 px-2 py-2 text-white uppercase ml-2" type="submit">Create
                         </button>
                     </form>
