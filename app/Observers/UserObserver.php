@@ -29,7 +29,7 @@ class UserObserver
         }
 
         UserAuditJob::dispatch([
-            'event' => 'created',
+            'event' => 'updated',
             'user_id' => auth()->id(),
             'when' => now(),
             'details' => [
