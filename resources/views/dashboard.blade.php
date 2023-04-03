@@ -48,10 +48,12 @@
                         @foreach($user->historic as $key => $historic)
                             <div>
                                 {{ ucfirst($historic->event) }} {{isset($historic->author) ? 'by' : ''}}
-                                <span
-                                    class="text-green-300 font-semibold">{{$historic->author->name ?? ''}}</span>
-                                at {{$historic->when->format('Y/m/d')}}
-                                - <a href="">View changes</a>
+                                <span class="text-green-300 font-semibold">
+                                    {{$historic->author->name ?? ''}}
+                                </span>
+                                <span>
+                                    at {{$historic->when->format('Y/m/d')}} - <a href="">View changes</a>
+                                </span>
                             </div>
                         @endforeach
                     </ul>
