@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,10 +29,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/users', function(\Illuminate\Http\Request $request) {
+    Route::post('/users', function (Request $request) {
         User::query()->create($request->all());
         return back();
     })->name('users.store');
+
+    Route::get('/users/{user}', function (User $user) {
+        return view('user', ['user' => $user]);
+    })->name('users.show');
+
+    Route::post('/users/{user}', function (User $user, Request $request) {
+        $user->fill($request->all())->save();
+        return to_route('dashboard');
+    })->name('users.update');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

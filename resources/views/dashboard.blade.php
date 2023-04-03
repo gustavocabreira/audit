@@ -27,11 +27,11 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <ul>
                         @foreach($users as $user)
-                        <li>
-                            {{$user->name}} -
-                            <a href="">update</a>
-                            <a href="">delete</a>
-                        </li>
+                            <li>
+                                {{$user->name}} -
+                                <a href="{{route('users.show', ['user' => $user])}}">update</a>
+                                <a href="">delete</a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
