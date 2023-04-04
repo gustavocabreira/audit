@@ -53,6 +53,9 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
+RUN echo 'alias a="php artisan"' >> ~/.bashrc
+RUN echo 'alias mfs="a migrate:fresh --seed"' >> ~/.bashrc
+
 EXPOSE 8000
 
 ENTRYPOINT ["start-container"]
