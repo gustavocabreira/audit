@@ -2,7 +2,6 @@
 
 use App\Http\Livewire\User\CreateUser;
 use App\Http\Livewire\User\ListUser;
-use App\Http\Livewire\User\UpdateUser;
 use App\Jobs\UserAuditJob;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
