@@ -11,17 +11,25 @@ use function Pest\Livewire\livewire;
 uses(RefreshDatabase::class);
 
 it('should be able to create an user', function () {
-
+    // Arrange
     Queue::fake();
+
     // Act
-    $lw = livewire(CreateUser::class)
+    livewire(CreateUser::class)
         ->set('name', 'Gustavo Cabreira')
         ->set('email', 'gustavo.softdev@gmail.com')
         ->set('password', 'password')
         ->call('create');
 
     // Assert
-    expect(User::query()->count())->toBe(1);
+    $user = User::first();
+    expect(User::query()->count())->toBe(1)
+        ->and($user->name)
+        ->toBe('Gustavo Cabreira')
+        ->and($user->email)
+        ->toBe('gustavo.softdev@gmail.com')
+        ->and(Illuminate\Support\Facades\Hash::check('password', $user->password))
+        ->toBeTrue();
     Queue::assertPushed(UserAuditJob::class);
 
 });
