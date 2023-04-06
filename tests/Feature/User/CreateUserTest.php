@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Livewire\User\CreateUser;
+use App\Http\Livewire\User\ListUser;
 use App\Jobs\UserAuditJob;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use function Pest\Livewire\livewire;
 
@@ -31,7 +31,16 @@ it('should be able to create an user', function () {
     Queue::assertPushed(UserAuditJob::class);
 
 });
-todo('it should be able to list all user');
+it('should be able to list all user', function () {
+    // Arrange
+    $user = User::factory()->create();
+
+    // Act
+    $lw = livewire(ListUser::class);
+
+    // Assert
+    $lw->assertSee($user->name);
+});
 todo('it should be able to show an user');
 todo('it should be able to update an user');
 todo('it should be able to delete an user');
