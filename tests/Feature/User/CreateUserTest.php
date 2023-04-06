@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\User\CreateUser;
 use App\Http\Livewire\User\ListUser;
+use App\Http\Livewire\User\UpdateUser;
 use App\Jobs\UserAuditJob;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,6 +32,7 @@ it('should be able to create an user', function () {
     Queue::assertPushed(UserAuditJob::class);
 
 });
+
 it('should be able to list all user', function () {
     // Arrange
     $user = User::factory()->create();
@@ -41,6 +43,7 @@ it('should be able to list all user', function () {
     // Assert
     $lw->assertSee($user->name);
 });
-todo('it should be able to show an user');
+
+todo('should be able to show an user');
 todo('it should be able to update an user');
 todo('it should be able to delete an user');
