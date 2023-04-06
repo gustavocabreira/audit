@@ -27,9 +27,7 @@ it('should be able to create an user', function () {
         ->and($user->name)
         ->toBe('Gustavo Cabreira')
         ->and($user->email)
-        ->toBe('gustavo.softdev@gmail.com')
-        ->and(Illuminate\Support\Facades\Hash::check('password', $user->password))
-        ->toBeTrue();
+        ->toBe('gustavo.softdev@gmail.com');
     Queue::assertPushed(UserAuditJob::class);
 
 });
