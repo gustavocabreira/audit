@@ -31,19 +31,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
-    Route::get('/users/{user}', function (User $user) {
-        return view('user', ['user' => $user]);
-    })->name('users.show');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
-    Route::post('/users/{user}', function (User $user, Request $request) {
-        $user->fill($request->all())->save();
-        return to_route('dashboard');
-    })->name('users.update');
+    Route::post('/users/{user}', [UserController::class, 'update'])->name('users.update');
 
-    Route::get('/users/{user}/delete', function (User $user) {
-        $user->delete();
-        return to_route('dashboard');
-    })->name('users.delete');
+    Route::get('/users/{user}/delete', [UserController::class, 'destroy'])->name('users.delete');
 });
 
 require __DIR__ . '/auth.php';

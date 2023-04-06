@@ -27,4 +27,26 @@ class UserController extends Controller
         User::query()->create($validated);
         return back();
     }
+
+    public function show(User $user): View
+    {
+        return view('user', ['user' => $user]);
+    }
+
+    public function update(User $user, Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required'],
+            'email' => ['required'],
+        ]);
+
+        $user->fill($validated)->save();
+        return to_route('dashboard');
+    }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        $user->delete();
+        return to_route('dashboard');
+    }
 }
