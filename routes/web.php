@@ -29,10 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/users', function (Request $request) {
-        User::query()->create($request->all());
-        return back();
-    })->name('users.store');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
     Route::get('/users/{user}', function (User $user) {
         return view('user', ['user' => $user]);
