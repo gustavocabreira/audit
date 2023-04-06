@@ -22,7 +22,7 @@ it('should be able to create an user', function () {
         ->call('create');
 
     // Assert
-    $user = User::first();
+    $user = User::query()->first();
     expect(User::query()->count())->toBe(1)
         ->and($user->name)
         ->toBe('Gustavo Cabreira')
