@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Jobs\UserAuditJob;
-use App\Models\Audit;
 use App\Models\User;
 
 class UserObserver
