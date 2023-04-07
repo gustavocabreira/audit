@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Post;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -22,6 +23,7 @@ class CreatePost extends Component
             'title' => $this->title,
             'body' => $this->body,
             'published_at' => $this->publish_date,
+            'is_published' => now()->startOfDay()->timestamp === Carbon::createFromDate($this->publish_date)->startOfDay()->timestamp,
         ];
         auth()->user()->posts()->create($payload);
         $this->emit('createdPost');

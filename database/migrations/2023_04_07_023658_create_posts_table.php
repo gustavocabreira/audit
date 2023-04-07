@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->longText('body');
             $table->dateTime('published_at');
-            $table->boolean('published')->nullable()->default(0);
+            $table->boolean('is_published')->nullable()->default(0);
             $table->timestamps();
         });
     }

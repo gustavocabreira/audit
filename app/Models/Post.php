@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Query\Builder;
 
 class Post extends Model
 {
@@ -15,12 +16,12 @@ class Post extends Model
         'title',
         'body',
         'published_at',
-        'published',
+        'is_published',
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
-        'published' => 'boolean',
+        'is_published' => 'boolean',
     ];
 
     public function author(): BelongsTo
@@ -30,11 +31,16 @@ class Post extends Model
 
     public function publish(): bool
     {
-        return $this->update(['published' => true]);
+        return $this->update(['is_published' => true]);
     }
 
     public function scopeIsPublished($query)
     {
-        return $query->where('published', true);
+        return $query->where('is_published', true);
+    }
+
+    public function scopeIsNotPublished($query)
+    {
+        return $query->where('is_published', 0)->whereDate('published_at', '<=', now()->addDay());
     }
 }

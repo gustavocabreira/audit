@@ -14,11 +14,6 @@ class PostPublish extends Command
 
     public function handle(): void
     {
-        $posts = Post::query()
-            ->where('published', 0)
-            ->whereDate('published_at', '<=', now())
-            ->get();
-
-        $this->withProgressBar($posts, fn(Post $post) => PublishPostJob::dispatch($post));
+        $this->withProgressBar(Post::isNotPublished()->get(), fn(Post $post) => PublishPostJob::dispatch($post));
     }
 }
