@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\Post\CreatePost;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/users/{user}', [UserController::class, 'update'])->name('users.update');
 
     Route::get('/users/{user}/delete', [UserController::class, 'destroy'])->name('users.delete');
+
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::post('/posts', CreatePost::class)->name('posts.store');
 });
 
 require __DIR__ . '/auth.php';
