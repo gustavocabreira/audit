@@ -32,4 +32,9 @@ class Post extends Model
     {
         return $this->update(['published' => true]);
     }
+
+    public function scopeIsPublished($query)
+    {
+        return $query->where('published', true);
+    }
 }

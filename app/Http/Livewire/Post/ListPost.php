@@ -14,7 +14,7 @@ class ListPost extends Component
 
     public function mount(): void
     {
-        $this->posts = Post::with('author')->latest()->get();
+        $this->posts = Post::with('author')->isPublished()->latest()->get();
     }
 
     public function render(): View
@@ -24,6 +24,6 @@ class ListPost extends Component
 
     public function refreshPosts(): void
     {
-        $this->posts = Post::with('author')->latest()->get();
+        $this->posts = Post::with('author')->isPublished()->latest()->get();
     }
 }
