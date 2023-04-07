@@ -9,12 +9,14 @@ use Livewire\Component;
 class ListPost extends Component
 {
     public $posts;
+    public $scheduledPosts;
 
     protected $listeners = ['createdPost' => 'refreshPosts'];
 
     public function mount(): void
     {
         $this->posts = Post::with('author')->isPublished()->latest()->get();
+        $this->scheduledPosts = Post::with('author')->isScheduled()->latest()->get();
     }
 
     public function render(): View
@@ -25,5 +27,6 @@ class ListPost extends Component
     public function refreshPosts(): void
     {
         $this->posts = Post::with('author')->isPublished()->latest()->get();
+        $this->scheduledPosts = Post::with('author')->isScheduled()->latest()->get();
     }
 }

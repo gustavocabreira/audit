@@ -39,7 +39,7 @@ class Post extends Model
         return $query->where('is_published', true);
     }
 
-    public function scopeIsNotPublished($query)
+    public function scopeIsScheduled($query)
     {
         return $query->where('is_published', 0)->whereDate('published_at', '<=', now()->addDay());
     }
