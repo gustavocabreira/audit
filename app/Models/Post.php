@@ -27,4 +27,9 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function publish(): bool
+    {
+        return $this->update(['published' => true]);
+    }
 }
