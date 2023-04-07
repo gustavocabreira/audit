@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class CreateUser extends Component
@@ -16,7 +17,7 @@ class CreateUser extends Component
         $payload = [
             'name' => $this->name,
             'email' => $this->email,
-            'password' => $this->password
+            'password' => Hash::make($this->password),
         ];
         User::query()->create($payload);
         $this->emit('userCreated');
