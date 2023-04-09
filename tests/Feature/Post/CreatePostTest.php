@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Livewire\Post\CreatePost;
+use App\Jobs\PostAuditJob;
 use App\Models\User;
 use App\Notifications\PostCreatedSuccessfully;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
@@ -104,4 +106,19 @@ it('should clear all fields after creating', function () {
         ->assertSet('publish_date', now()->format('Y-m-d'));
 });
 
-todo('should create the audit job when creating a new post');
+it('should create the audit job when creating a new post', function () {
+    // Arrange
+    Queue::fake();
+    $user = User::factory()->create();
+    actingAs($user);
+
+    // Act
+    livewire(CreatePost::class)
+        ->set('title', 'Title')
+        ->set('body', 'Body')
+        ->set('publish_date', now()->format('Y-m-d'))
+        ->call('create');
+
+    // Assert
+    Queue::assertPushed(PostAuditJob::class);
+});
