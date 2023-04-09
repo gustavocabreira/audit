@@ -2,7 +2,9 @@
 
 use App\Http\Livewire\Post\CreatePost;
 use App\Models\User;
+use App\Notifications\PostCreatedSuccessfully;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
@@ -66,5 +68,24 @@ it('should emmit a createdPost event', function () {
     $lw->assertEmitted('createdPost');
 });
 
-todo('should send an email to the user that has created the post');
+it('should send an email to the user that has created the post', function () {
+    // Arrange
+    Notification::fake();
+    $user = User::factory()->create();
+    actingAs($user);
+
+    // Act
+    livewire(CreatePost::class)
+        ->set('title', 'Title')
+        ->set('body', 'Body')
+        ->set('publish_date', now()->format('Y-m-d'))
+        ->call('create');
+
+    // Assert
+    Notification::assertSentTo($user, PostCreatedSuccessfully::class, function ($notification) use ($user) {
+        return $notification->toMail($user)->subject === 'Post created successfully';
+    });
+});
+
 todo('should clear all fields after creating');
+todo('should create the audit job when creating a new post');

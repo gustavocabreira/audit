@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Post;
 
+use App\Notifications\PostCreatedSuccessfully;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -34,7 +35,8 @@ class CreatePost extends Component
         ];
 
         auth()->user()->posts()->create($payload);
-        
+        auth()->user()->notify(new PostCreatedSuccessfully);
+
         $this->emit('createdPost');
         $this->title = null;
         $this->body = null;
