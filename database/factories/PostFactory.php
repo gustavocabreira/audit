@@ -17,7 +17,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => 1,
+            'title' => 'Title',
+            'body' => 'Body',
+            'published_at' => now()->format('Y-m-d'),
+            'is_published' => true,
         ];
     }
 }
