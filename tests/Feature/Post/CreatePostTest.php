@@ -33,7 +33,22 @@ it('should be able to create a new post', function () {
     ]);
 });
 
-todo('body and title can not be empty');
+test('body and title can not be empty', function () {
+    // Arrange
+    $user = User::factory()->create();
+    actingAs($user);
+
+    // Act
+    $lw = livewire(CreatePost::class)
+        ->set('title', null)
+        ->set('body', null)
+        ->set('publish_date', now()->format('Y-m-d'))
+        ->call('create');
+
+    // Assert
+    $lw->assertHasErrors();
+});
+
 todo('should emmit a createdPost event');
 todo('should send an email to the user that has created the post');
 todo('should clear all fields after creating');
