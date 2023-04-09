@@ -38,8 +38,7 @@ class CreatePost extends Component
         auth()->user()->notify(new PostCreatedSuccessfully);
 
         $this->emit('createdPost');
-        $this->title = null;
-        $this->body = null;
+        $this->reset('body', 'title');
         $this->publish_date = now()->format('Y-m-d');
     }
 

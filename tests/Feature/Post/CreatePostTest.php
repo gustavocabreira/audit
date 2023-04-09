@@ -11,7 +11,6 @@ use function Pest\Livewire\livewire;
 
 uses(RefreshDatabase::class);
 
-
 it('should be able to create a new post', function () {
     // Arrange
     $user = User::factory()->create();
@@ -87,5 +86,22 @@ it('should send an email to the user that has created the post', function () {
     });
 });
 
-todo('should clear all fields after creating');
+it('should clear all fields after creating', function () {
+    // Arrange
+    $user = User::factory()->create();
+    actingAs($user);
+
+    // Act
+    $lw = livewire(CreatePost::class)
+        ->set('title', 'Title')
+        ->set('body', 'Body')
+        ->set('publish_date', now()->format('Y-m-d'))
+        ->call('create');
+
+    // Assert
+    $lw->assertSet('title', null)
+        ->assertSet('body', null)
+        ->assertSet('publish_date', now()->format('Y-m-d'));
+});
+
 todo('should create the audit job when creating a new post');
