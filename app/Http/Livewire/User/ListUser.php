@@ -13,7 +13,7 @@ class ListUser extends Component
 
     public function mount()
     {
-        $this->users = User::latest()->get();
+        $this->users = User::query()->latest()->get();
     }
 
     public function render()
@@ -23,6 +23,6 @@ class ListUser extends Component
 
     public function refreshUsers()
     {
-        $this->users = User::latest()->get();
+        $this->users = User::query()->latest()->get();
     }
 }

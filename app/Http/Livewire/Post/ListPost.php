@@ -19,7 +19,7 @@ class ListPost extends Component
     public function mount(): void
     {
         $this->posts = Post::with('author')->isPublished()->latest()->get();
-        $this->scheduledPosts = Post::with('author')->isScheduled()->latest()->get();
+        $this->scheduledPosts = Post::with('author')->where('is_published', 0)->latest()->get();
     }
 
     public function render(): View
@@ -30,6 +30,6 @@ class ListPost extends Component
     public function refreshPosts(): void
     {
         $this->posts = Post::with('author')->isPublished()->latest()->get();
-        $this->scheduledPosts = Post::with('author')->isScheduled()->latest()->get();
+        $this->scheduledPosts = Post::with('author')->where('is_published', 0)->latest()->get();
     }
 }
