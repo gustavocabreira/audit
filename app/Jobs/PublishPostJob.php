@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Post;
+use App\Notifications\PostCreatedSuccessfully;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -21,6 +22,6 @@ class PublishPostJob implements ShouldQueue
     public function handle(): void
     {
         $this->post->publish();
-        $this->post->author()->notify(new SendPostCreatedSuccessfullyNotification);
+        $this->post->author->notify(new PostCreatedSuccessfully);
     }
 }
