@@ -26,7 +26,6 @@ it('should be able to create a new post', function () {
     // Assert
     $lw->assertHasNoErrors();
     assertDatabaseHas('posts', [
-        'id' => 1,
         'user_id' => $user->id,
         'title' => 'Title',
         'body' => 'Body',

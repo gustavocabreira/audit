@@ -14,6 +14,6 @@ class PostPublish extends Command
 
     public function handle(): void
     {
-        $this->withProgressBar(Post::isScheduled()->get(), fn(Post $post) => PublishPostJob::dispatch($post));
+        $this->withProgressBar(Post::with('author')->isScheduled()->get(), fn(Post $post) => PublishPostJob::dispatch($post));
     }
 }

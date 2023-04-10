@@ -10,20 +10,31 @@ use function Pest\Laravel\freezeTime;
 
 it('should publish a post', function () {
     freezeTime();
-    Notification::fake();
 
     $user = User::factory()->create();
     Post::factory()->create([
+        'user_id' => $user->id,
         'published_at' => now()->subDay(),
         'is_published' => false,
     ]);
 
     artisan('post:publish');
-    Notification::assertSentTo($user, PostCreatedSuccessfully::class);
     assertDatabaseHas('posts', [
         'id' => 1,
         'is_published' => true,
     ]);
 });
 
-todo('should send a post created successfully notification');
+it('should send a post created successfully notification', function () {
+    Notification::fake();
+
+    $user = User::factory()->create();
+    Post::factory()->create([
+        'user_id' => $user->id,
+        'published_at' => now()->subDay(),
+        'is_published' => false,
+    ]);
+
+    artisan('post:publish');
+    Notification::assertSentTo($user, PostCreatedSuccessfully::class);
+});
