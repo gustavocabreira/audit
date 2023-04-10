@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OAuth\GitHubController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -43,4 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/posts', CreatePost::class)->name('posts.store');
 });
 
+
+Route::get('oauth/github', [GitHubController::class, 'gitRedirect']);
+Route::get('oauth/github/callback', [GitHubController::class, 'gitCallback']);
+
 require __DIR__ . '/auth.php';
+
