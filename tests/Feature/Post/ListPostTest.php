@@ -23,5 +23,17 @@ it('should list all posts', function () {
         ->assertSee($post->author->name);
 });
 
-todo('user can only update posts that belongs to him');
-todo('user can only delete posts that belongs to him');
+it('user can not see update button when the post does not belongs to him', function () {
+    // Arrange
+    $postUser = User::factory()->create();
+    $anotherUser = User::factory()->create(['email' => 'anotheruser@email.com']);
+    actingAs($anotherUser);
+
+    // Act
+    $lw = livewire(ListPost::class);
+
+    // Assert
+    $lw->assertDontSee('Update');
+});
+
+todo('user can not delete posts that does not belongs to him');

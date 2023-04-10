@@ -4,10 +4,13 @@ namespace App\Http\Livewire\Post;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class ListPost extends Component
 {
+    use AuthorizesRequests;
+
     public $posts;
     public $scheduledPosts;
 

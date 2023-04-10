@@ -1,11 +1,18 @@
 <div>
     @foreach($posts as $post)
-        <article class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-5 p-5">
-            <h1>{{ucfirst($post->title)}}</h1>
-            <h6>
-                Created by <span class="text-green-300 font-semibold">{{$post->author->name}}</span>
-                and published at <span>{{$post->published_at->format('Y/m/d')}}</span>
-            </h6>
+        <article
+            class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-5 p-5 flex align-items-center justify-between">
+            <div>
+                <h1>{{ucfirst($post->title)}}</h1>
+                <h6>
+                    Created by <span class="text-green-300 font-semibold">{{$post->author->name}}</span>
+                    and published at <span>{{$post->published_at->format('Y/m/d')}}</span>
+                </h6>
+            </div>
+
+            @can('update', $post)
+                <button type="button" class="bg-orange-500 px-2 py-2 text-white uppercase ml-2">Update</button>
+            @endcan
         </article>
     @endforeach
     <div class="max-w-7xl mb-3 mt-6">
@@ -13,11 +20,17 @@
     </div>
     @foreach($scheduledPosts as $post)
         <article class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-5 p-5">
-            <h1>{{ucfirst($post->title)}}</h1>
-            <h6>
-                Created by <span class="text-green-300 font-semibold">{{$post->author->name}}</span>
-                and will be published at <span>{{$post->published_at->format('Y/m/d')}}</span>
-            </h6>
+            <div>
+                <h1>{{ucfirst($post->title)}}</h1>
+                <h6>
+                    Created by <span class="text-green-300 font-semibold">{{$post->author->name}}</span>
+                    and will be published at <span>{{$post->published_at->format('Y/m/d')}}</span>
+                </h6>
+            </div>
+
+            @can('update', $post)
+                <button type="button">Update</button>
+            @endcan
         </article>
     @endforeach
 </div>
