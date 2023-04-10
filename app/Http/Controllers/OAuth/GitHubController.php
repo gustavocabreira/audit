@@ -40,10 +40,6 @@ class GitHubController extends Controller
             'password' => encrypt('gitpwd059'),
         ]);
 
-        Password::sendResetLink(
-            ['email' => $user->email]
-        );
-
         Auth::login($gitUser);
 
         return redirect('/dashboard');
