@@ -10,9 +10,14 @@
                 </h6>
             </div>
 
-            @can('update', $post)
-                <button type="button" class="bg-orange-500 px-2 py-2 text-white uppercase ml-2">Update</button>
-            @endcan
+            <div>
+                @can('update', $post)
+                    <button type="button" class="bg-orange-500 px-2 py-2 text-white uppercase ml-2">Update</button>
+                @endcan
+                @can('delete', $post)
+                    <button type="button" class="bg-red-500 px-2 py-2 text-white uppercase ml-2">Delete</button>
+                @endcan
+            </div>
         </article>
     @endforeach
     <div class="max-w-7xl mb-3 mt-6">

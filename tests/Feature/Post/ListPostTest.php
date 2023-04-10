@@ -23,7 +23,7 @@ it('should list all posts', function () {
         ->assertSee($post->author->name);
 });
 
-it('user can not see update button when the post does not belongs to him', function () {
+test('user can not see update button when the post does not belongs to him', function () {
     // Arrange
     $postUser = User::factory()->create();
     $anotherUser = User::factory()->create(['email' => 'anotheruser@email.com']);
@@ -36,4 +36,15 @@ it('user can not see update button when the post does not belongs to him', funct
     $lw->assertDontSee('Update');
 });
 
-todo('user can not delete posts that does not belongs to him');
+test('user can not delete posts that does not belongs to him', function () {
+    // Arrange
+    $postUser = User::factory()->create();
+    $anotherUser = User::factory()->create(['email' => 'anotheruser@email.com']);
+    actingAs($anotherUser);
+
+    // Act
+    $lw = livewire(ListPost::class);
+
+    // Assert
+    $lw->assertDontSee('Delete0,');
+});
