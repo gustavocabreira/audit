@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Post;
 
+use App\Jobs\SendPostCreatedSuccessfullyNotification;
 use App\Notifications\PostCreatedSuccessfully;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -27,15 +28,18 @@ class CreatePost extends Component
     {
         $this->validate();
 
+        $isNotScheduled = now()->startOfDay()->timestamp === Carbon::createFromDate($this->publish_date)->startOfDay()->timestamp;
+
         $payload = [
             'title' => $this->title,
             'body' => $this->body,
             'published_at' => $this->publish_date,
-            'is_published' => now()->startOfDay()->timestamp === Carbon::createFromDate($this->publish_date)->startOfDay()->timestamp,
+            'is_published' => $isNotScheduled,
         ];
 
         auth()->user()->posts()->create($payload);
-        auth()->user()->notify(new PostCreatedSuccessfully);
+
+        if ($isNotScheduled) SendPostCreatedSuccessfullyNotification::dispatch(auth()->user());
 
         $this->emit('createdPost');
         $this->reset('body', 'title');

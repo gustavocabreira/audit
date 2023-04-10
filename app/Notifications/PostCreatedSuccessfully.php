@@ -36,9 +36,7 @@ class PostCreatedSuccessfully extends Notification
     {
         return (new MailMessage)
             ->subject('Post created successfully')
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->line('Your post have been created successfully and is available on posts list');
     }
 
     /**

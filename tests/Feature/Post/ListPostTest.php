@@ -3,17 +3,13 @@
 use App\Http\Livewire\Post\ListPost;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
-
-uses(RefreshDatabase::class);
 
 it('should list all posts', function () {
     // Arrange
     $user = User::factory()->create();
-    $post = Post::factory()->create();
-    actingAs($user);
+    $post = $user->posts()->create(Post::factory()->make()->toArray());
 
     // Act
     $lw = livewire(ListPost::class);

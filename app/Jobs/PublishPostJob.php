@@ -21,5 +21,6 @@ class PublishPostJob implements ShouldQueue
     public function handle(): void
     {
         $this->post->publish();
+        $this->post->author()->notify(new SendPostCreatedSuccessfullyNotification);
     }
 }

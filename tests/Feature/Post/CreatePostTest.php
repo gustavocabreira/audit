@@ -2,16 +2,14 @@
 
 use App\Http\Livewire\Post\CreatePost;
 use App\Jobs\PostAuditJob;
+use App\Jobs\SendPostCreatedSuccessfullyNotification;
 use App\Models\User;
 use App\Notifications\PostCreatedSuccessfully;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
-
-uses(RefreshDatabase::class);
 
 it('should be able to create a new post', function () {
     // Arrange
@@ -35,6 +33,23 @@ it('should be able to create a new post', function () {
         'published_at' => now()->startOfDay()->format('Y-m-d H:i:s'),
         'is_published' => 1,
     ]);
+});
+
+it('should send a post create successfully notification', function () {
+    // Arrange
+    Queue::fake();
+    $user = User::factory()->create();
+    actingAs($user);
+
+    // Act
+    $lw = livewire(CreatePost::class)
+        ->set('title', 'Title')
+        ->set('body', 'Body')
+        ->set('publish_date', now()->format('Y-m-d'))
+        ->call('create');
+
+    // Assert
+    Queue::assertPushed(SendPostCreatedSuccessfullyNotification::class);
 });
 
 test('body and title can not be empty', function () {
